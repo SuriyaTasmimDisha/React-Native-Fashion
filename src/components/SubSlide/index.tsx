@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import Button from '../Button';
+import ButtonComponent from "../Button";
 import styles from './styles';
 
 interface SubSlideProps {
@@ -10,12 +10,12 @@ interface SubSlideProps {
   onPress: () => void;
 }
 
-const SubSlide = ({subtitle, description, last, onPress}: SubSlideProps) => {
+const SubSlide = ({ subtitle, description, last, onPress }: SubSlideProps) => {  
   return (
     <View style={styles.container}>
       <Text style={styles.subtitle}>{subtitle}</Text>
       <Text style={styles.description}>{description}</Text>
-      <Button
+      <ButtonComponent
         label={last ? "Let's get started !" : 'Next'}
         variant={last ? 'primary' : 'default'}
         {...{onPress}}

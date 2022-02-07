@@ -47,12 +47,10 @@ const slides = [
 const OnboardingScreen = () => {
   const horizontalValue = useSharedValue(0);
 
-  const scroll = useRef<Animated.ScrollView>(null);
+  const scroll = useRef<any>(null);
 
   const scrollHandler = useAnimatedScrollHandler(event => {
     horizontalValue.value = event.contentOffset.x;
-    console.log(horizontalValue.value);
-    
   });
 
   const sliderStyle = useAnimatedStyle<any>(() => {
@@ -61,13 +59,16 @@ const OnboardingScreen = () => {
       slides.map((_, i) => i * width),
       slides.map(slide => slide.color),
     );
+
     return {backgroundColor};
   });
 
-  // const subSlideStyle = useAnimatedStyle<any>(() => {
-  //   const transform = [{ translateX: multiply(x.value, -1) }];
-  //   return { transform };
-  // })
+  const transformStyle = useAnimatedStyle<any>(() => {
+    const transform = [{translateX: -horizontalValue.value}];
+    const borderTopLeftRadius = 75;
+    // return {transform: [{translateX: -horizontalValue.value}]};
+    return {transform, borderTopLeftRadius}
+  });
 
   return (
     <View style={styles.container}>
@@ -95,8 +96,8 @@ const OnboardingScreen = () => {
             {
               width: width * slides.length,
               flex: 1,
-              transform: [{translateX: multiply(horizontalValue.value, -1)}],
             },
+            transformStyle,
           ]}>
           {slides.map((slide, index) => (
             <SubSlide
@@ -106,9 +107,10 @@ const OnboardingScreen = () => {
               key={index}
               onPress={() => {
                 if (scroll.current) {
-                  scroll.current
-                    .getNode()
-                    .scrollTo({x: width * (index + 1), animated: true});
+                  scroll.current.scrollTo({
+                    x: width * (index + 1),
+                    animated: true,
+                  });
                 }
               }}
             />

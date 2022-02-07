@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   footerContent: {
     flexDirection: 'row',
     backgroundColor: 'white',
-    borderTopLeftRadius: 75,
+    // borderTopLeftRadius: 75,
   },
 });
 
